@@ -1,0 +1,45 @@
+{
+	"name": "@keeveestore/test-suite",
+	"version": "0.1.2",
+	"description": "Test suite for KeeVee Store API compliance.",
+	"homepage": "https://github.com/keeveestore/test-suite",
+	"bugs": {
+		"url": "https://github.com/keeveestore/test-suite/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git@github.com:keeveestore/test-suite.git"
+	},
+	"license": "MIT",
+	"author": "Brian Faust <hello@basecode.sh>",
+	"files": [
+		"dist"
+	],
+	"main": "dist/index",
+	"types": "dist/index",
+	"scripts": {
+		"build": "yarn clean && tsc",
+		"build:watch": "yarn build -w",
+		"clean": "rimraf .coverage dist tmp",
+		"format": "yarn lint && yarn prettier",
+		"lint": "tslint -c tslint.json 'src/**/*.ts' --fix",
+		"prepublishOnly": "yarn format && yarn build",
+		"prettier": "prettier --write \"./*.{ts,js,json,md}\" \"./**/*.{ts,js,json,md}\""
+	},
+	"dependencies": {
+		"@keeveestore/keeveestore": "^0.1.0",
+		"jest-extended": "^0.11.1"
+	},
+	"devDependencies": {
+		"@sindresorhus/tsconfig": "^0.3.0",
+		"@types/jest": "^24.0.12",
+		"@types/node": "^12.0.0",
+		"jest": "^24.8.0",
+		"prettier": "^1.17.0",
+		"rimraf": "^2.6.3",
+		"ts-jest": "^24.0.2",
+		"tslint": "^5.16.0",
+		"tslint-config-prettier": "^1.18.0",
+		"typescript": "^3.4.5"
+	}
+}
