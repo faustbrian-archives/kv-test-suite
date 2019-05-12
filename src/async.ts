@@ -2,7 +2,7 @@ import { IKeyValueStoreAsync } from "@keeveestore/keeveestore";
 import "jest-extended";
 
 // @ts-ignore
-export const complianceTestsAsync = <K, T>(store: IKeyValueStoreAsync<K, T>, items: Record<K, T>): void => {
+export const complianceTestsAsync = <K, T>(createStore: () => IKeyValueStoreAsync<K, T>, items: Record<K, T>): void => {
 	// @ts-ignore
 	const itemsEntries: Array<[K, T]> = Object.entries(items);
 	// @ts-ignore
@@ -13,6 +13,9 @@ export const complianceTestsAsync = <K, T>(store: IKeyValueStoreAsync<K, T>, ite
 	const resultsFalse: boolean[] = new Array(itemsEntries.length).fill(false);
 	const resultsUndefined: boolean[] = new Array(itemsEntries.length).fill(undefined);
 
+	// Arrange
+	let store: IKeyValueStoreAsync<K, T>;
+	beforeAll(async () => (store = await createStore()));
 	beforeEach(() => store.flush());
 
 	describe(".all()", () => {
