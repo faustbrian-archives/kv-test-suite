@@ -1,8 +1,11 @@
 import { IKeyValueStoreAsync } from "@keeveestore/keeveestore";
 import "jest-extended";
 
-// @ts-ignore
-export const complianceTestsAsync = <K, T>(createStore: () => IKeyValueStoreAsync<K, T>, items: Record<K, T>): void => {
+export const complianceTestsAsync = <K, T>(
+	createStore: () => Promise<IKeyValueStoreAsync<K, T>>,
+	// @ts-ignore
+	items: Record<K, T>,
+): void => {
 	// @ts-ignore
 	const itemsEntries: Array<[K, T]> = Object.entries(items);
 	// @ts-ignore

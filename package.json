@@ -1,6 +1,6 @@
 {
 	"name": "@keeveestore/test-suite",
-	"version": "0.1.2",
+	"version": "0.1.3",
 	"description": "Test suite for KeeVee Store API compliance.",
 	"homepage": "https://github.com/keeveestore/test-suite",
 	"bugs": {
