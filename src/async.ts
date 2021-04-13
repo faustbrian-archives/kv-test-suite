@@ -1,10 +1,14 @@
-import { IKeyValueStoreAsync } from "@konceiver/kv";
+/* eslint-disable @typescript-eslint/await-thenable */
+/* eslint-disable jest/no-export */
+
 import "jest-extended";
+
+import { IKeyValueStoreAsync } from "@konceiver/kv";
 
 export const complianceTestsAsync = <K, T>(
 	createStore: () => Promise<IKeyValueStoreAsync<K, T>>,
 	// @ts-ignore
-	items: Record<K, T>,
+	items: Record<K, T>
 ): void => {
 	// @ts-ignore
 	const itemsEntries: Array<[K, T]> = Object.entries(items);
@@ -14,7 +18,9 @@ export const complianceTestsAsync = <K, T>(
 
 	const resultsTrue: boolean[] = new Array(itemsEntries.length).fill(true);
 	const resultsFalse: boolean[] = new Array(itemsEntries.length).fill(false);
-	const resultsUndefined: boolean[] = new Array(itemsEntries.length).fill(undefined);
+	const resultsUndefined: boolean[] = new Array(itemsEntries.length).fill(
+		undefined
+	);
 
 	// Arrange
 	let store: IKeyValueStoreAsync<K, T>;
@@ -31,7 +37,9 @@ export const complianceTestsAsync = <K, T>(
 
 			await store.putMany(itemsEntries);
 
-			await expect(store.all()).resolves.toEqual(expect.arrayContaining(itemsEntries));
+			await expect(store.all()).resolves.toEqual(
+				expect.arrayContaining(itemsEntries)
+			);
 		});
 	});
 
@@ -45,7 +53,9 @@ export const complianceTestsAsync = <K, T>(
 
 			await store.putMany(itemsEntries);
 
-			await expect(store.keys()).resolves.toEqual(expect.arrayContaining(itemsKeys));
+			await expect(store.keys()).resolves.toEqual(
+				expect.arrayContaining(itemsKeys)
+			);
 		});
 	});
 
@@ -59,7 +69,9 @@ export const complianceTestsAsync = <K, T>(
 
 			await store.putMany(itemsEntries);
 
-			await expect(store.values()).resolves.toEqual(expect.arrayContaining(itemsValues));
+			await expect(store.values()).resolves.toEqual(
+				expect.arrayContaining(itemsValues)
+			);
 		});
 	});
 
@@ -133,23 +145,26 @@ export const complianceTestsAsync = <K, T>(
 
 			await expect(store.isNotEmpty()).resolves.toBeTrue();
 			// @ts-ignore
-			await expect(store.pullMany([itemsKeys[0], itemsKeys[1]])).resolves.toEqual([
-				itemsValues[0],
-				itemsValues[1],
-			]);
+			await expect(
+				store.pullMany([itemsKeys[0]!, itemsKeys[1]!])
+			).resolves.toEqual([itemsValues[0], itemsValues[1]]);
 			await expect(store.isEmpty()).resolves.toBeTrue();
 		});
 
 		it("should fail to pull many items from the store", async () => {
 			// @ts-ignore
-			await expect(store.pullMany([itemsKeys[0]])).resolves.toEqual([undefined]);
+			await expect(store.pullMany([itemsKeys[0]])).resolves.toEqual([
+				undefined,
+			]);
 		});
 	});
 
 	describe(".put(key, value)", () => {
 		it("should returns a promise", async () => {
 			// @ts-ignore
-			await expect(store.put(itemsKeys[0], itemsValues[0])).toBeInstanceOf(Promise);
+			await expect(store.put(itemsKeys[0], itemsValues[0])).toBeInstanceOf(
+				Promise
+			);
 		});
 
 		it("should put an item into the store", async () => {
@@ -183,7 +198,9 @@ export const complianceTestsAsync = <K, T>(
 
 		it("should put many items into the store", async () => {
 			// @ts-ignore
-			await expect(store.putMany([itemsEntries[0], itemsEntries[1]])).resolves.toEqual([true, true]);
+			await expect(
+				store.putMany([itemsEntries[0]!, itemsEntries[1]!])
+			).resolves.toEqual([true, true]);
 			await expect(store.isNotEmpty()).resolves.toBeTrue();
 		});
 	});
@@ -224,12 +241,16 @@ export const complianceTestsAsync = <K, T>(
 			await store.put(itemsKeys[0], itemsValues[0]);
 
 			// @ts-ignore
-			await expect(store.hasMany([itemsKeys[0], itemsKeys[1]])).resolves.toEqual([true, false]);
+			await expect(
+				store.hasMany([itemsKeys[0]!, itemsKeys[1]!])
+			).resolves.toEqual([true, false]);
 		});
 
 		it("should not have any items", async () => {
 			// @ts-ignore
-			await expect(store.hasMany([itemsKeys[0], itemsKeys[1]])).resolves.toEqual([false, false]);
+			await expect(
+				store.hasMany([itemsKeys[0]!, itemsKeys[1]!])
+			).resolves.toEqual([false, false]);
 		});
 	});
 
@@ -266,7 +287,13 @@ export const complianceTestsAsync = <K, T>(
 			// @ts-ignore
 			await store.put(itemsKeys[0], itemsValues[0]);
 
-			await expect(store.missingMany(itemsKeys)).resolves.toEqual([false, true, true, true, true]);
+			await expect(store.missingMany(itemsKeys)).resolves.toEqual([
+				false,
+				true,
+				true,
+				true,
+				true,
+			]);
 		});
 
 		it("should not be missing any items", async () => {

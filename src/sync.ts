@@ -1,8 +1,14 @@
-import { IKeyValueStoreSync } from "@konceiver/kv";
+/* eslint-disable jest/no-export */
+
 import "jest-extended";
 
+import { IKeyValueStoreSync } from "@konceiver/kv";
+
 // @ts-ignore
-export const complianceTestsSync = <K, T>(createStore: () => IKeyValueStoreSync<K, T>, items: Record<K, T>): void => {
+export const complianceTestsSync = <K, T>(
+	createStore: () => IKeyValueStoreSync<K, T>,
+	items: Record<any, T>
+): void => {
 	// @ts-ignore
 	const itemsEntries: Array<[K, T]> = Object.entries(items);
 	// @ts-ignore
@@ -11,7 +17,9 @@ export const complianceTestsSync = <K, T>(createStore: () => IKeyValueStoreSync<
 
 	const resultsTrue: boolean[] = new Array(itemsEntries.length).fill(true);
 	const resultsFalse: boolean[] = new Array(itemsEntries.length).fill(false);
-	const resultsUndefined: boolean[] = new Array(itemsEntries.length).fill(undefined);
+	const resultsUndefined: boolean[] = new Array(itemsEntries.length).fill(
+		undefined
+	);
 
 	// Arrange
 	let store: IKeyValueStoreSync<K, T>;
@@ -99,7 +107,10 @@ export const complianceTestsSync = <K, T>(createStore: () => IKeyValueStoreSync<
 
 			expect(store.isNotEmpty()).toBeTrue();
 			// @ts-ignore
-			expect(store.pullMany([itemsKeys[0], itemsKeys[1]])).toEqual([itemsValues[0], itemsValues[1]]);
+			expect(store.pullMany([itemsKeys[0], itemsKeys[1]])).toEqual([
+				itemsValues[0],
+				itemsValues[1],
+			]);
 			expect(store.isEmpty()).toBeTrue();
 		});
 
@@ -137,7 +148,10 @@ export const complianceTestsSync = <K, T>(createStore: () => IKeyValueStoreSync<
 	describe(".putMany(values)", () => {
 		it("should put many items into the store", () => {
 			// @ts-ignore
-			expect(store.putMany([itemsEntries[0], itemsEntries[1]])).toEqual([true, true]);
+			expect(store.putMany([itemsEntries[0], itemsEntries[1]])).toEqual([
+				true,
+				true,
+			]);
 			expect(store.isNotEmpty()).toBeTrue();
 		});
 	});
@@ -169,12 +183,18 @@ export const complianceTestsSync = <K, T>(createStore: () => IKeyValueStoreSync<
 			store.put(itemsKeys[0], itemsValues[0]);
 
 			// @ts-ignore
-			expect(store.hasMany([itemsKeys[0], itemsKeys[1]])).toEqual([true, false]);
+			expect(store.hasMany([itemsKeys[0], itemsKeys[1]])).toEqual([
+				true,
+				false,
+			]);
 		});
 
 		it("should not have any items", () => {
 			// @ts-ignore
-			expect(store.hasMany([itemsKeys[0], itemsKeys[1]])).toEqual([false, false]);
+			expect(store.hasMany([itemsKeys[0], itemsKeys[1]])).toEqual([
+				false,
+				false,
+			]);
 		});
 	});
 
@@ -202,7 +222,13 @@ export const complianceTestsSync = <K, T>(createStore: () => IKeyValueStoreSync<
 			// @ts-ignore
 			store.put(itemsKeys[0], itemsValues[0]);
 
-			expect(store.missingMany(itemsKeys)).toEqual([false, true, true, true, true]);
+			expect(store.missingMany(itemsKeys)).toEqual([
+				false,
+				true,
+				true,
+				true,
+				true,
+			]);
 		});
 
 		it("should not be missing any items", () => {
